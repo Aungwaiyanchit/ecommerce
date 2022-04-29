@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <title>Ecommerce</title>
+</head>
+<body>
+    <h1 class="title">Ecommerce</h1>
+    <div class="login">
+        <div class="login-triangle"></div>
+
+        <h5 class="login-header">Create a new account</h5>
+        {% if messages %}
+        <ul class="messages">
+           {% for message in messages %}
+               <li{% if message.tags %} class="{{ message.tags }} {% endif %}">{{message}}</li>
+           {% endfor %}     
+        </ul>
+        {% endif %}
+        <form class="login-container" method="post" action="">
+          {% csrf_token %}
+          <p><input type="text" placeholder="Username" name="username" required></p>
+          <p><input type="email" placeholder="Email" name="email" required></p>
+          <p><input type="password" placeholder="Password" name="password" required></p>
+          <p>Already registerd?<a href="{% url 'loginPage' %}" class="signup-link" style="margin-left: 5px">Login your account</a></p>
+          <p><input type="submit" value="Register"></p>
+        </form>
+      </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+
+{% block content %}
+    
+    <h5>Categories</h5>
+    <hr>
+    <div style="display: block;">
+        <a href="{% url 'store' %}" class="btn btn-outline-secondary add-btn updated-cart">All</a>
+        {% for category in categories %}
+        <a href="{% url 'store' %}?q={{category.name}}" class="btn btn-outline-secondary add-btn updated-cart">{{category}}</a>
+        {% endfor %}
+    </div>
+    <hr>
+    <!-- <div class="menu">
+        <button class="menu-title">Category</button>
+        <ul class="menu-item">
+            {% for category in categories %}
+            <a href="{% url 'store' %}?q={{category.name}}">{{category}}</a>
+            {% endfor %}
+        </ul>
+    </div> -->
+
+    <div class="row mt-2">
+       {% for product in  page_obj %}
+        <div class="col-lg-4 mb-3">
+            <img src="{{product.image.url}}" alt="" class="thumbnail">
+            <div class="box-element product">
+                <h6><strong>{{product.name}}</strong></h6>
+                <hr>
+                <button class="btn btn-outline-secondary add-btn updated-cart" data-product="{{product.id}}" data-action="add">Add to Cart</button>
+                <a  class="btn btn-outline-success" href="#">View</a>
+                <h4 style="float: right"><strong>${{product.price|floatformat:2}}</strong></h4>
+            </div>
+        </div>
+       {% endfor %}
+    </div>
+    <div class="pagination">
+        <span class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a href="?page=1" class="page-link">&laquo; first</a></li>
+                {% for i in num %}
+                <li class="page-item"><a class="page-link" href="?page={{forloop.counter}}">{{ forloop.counter }}</a></li>
+                {% endfor %}  
+                <li class="page-item"><a href="?page={{ page_obj.previous_page_number }}" class="page-link">previous</a></li>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}" class="page-link">next</a>
+                {% for i in num %}
+                    <li class="page-item"><a class="page-link" href="?page={{forloop.counter}}">{{ forloop.counter }}</a></li>
+                {% endfor %}   
+                <a href="?page={{ page_obj.paginator.num_pages }}" class="page-link">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
+{% endblock content %}
+    
